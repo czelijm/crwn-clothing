@@ -1,0 +1,39 @@
+version: "3.9"
+services:
+  node:
+    image: node:latest
+    ports:
+      - "80:80"
+      - "3000:3000"
+      - "443:443"
+      - "35729:35729" #for hotreloading
+    volumes: 
+      - ./crwn-clothing:/usr/src/app
+    working_dir: /usr/src/app
+    stdin_open: true
+    tty: true
+    environment: 
+      - CHOKIDAR_USEPOLLING=true #requried for docker and VM
+    # command: tail -f /dev/null #container will not stop on begging
+    command: npm start #bash
+
+###USAGE:    
+# run docker-compose up --detach
+# docker exec -it CONTAINER_NAME bash
+#propably:
+# docker exec -it monsters-rolodex_node_1 bash
+
+# run as command
+#docker run -p 3000:3000 -p 35729:35729 -e CHOKIDAR_USEPOLLING=true -v `pwd`:/usr/src/app:rw -w /usr/src/app -it 56bc npx npm start
+#docker run -p 3000:3000 -e CHOKIDAR_USEPOLLING=true -v `pwd`:/usr/src/app:rw -w /usr/src/app -it --rm 56bc npx create-react-app crwn-clothing
+
+    # deploy:
+    #   replicas: 1
+    # configs:
+    #   - my_config
+    #   - my_other_config
+# configs:
+#   my_config:
+#     file: ./my_config.txt
+#   my_other_config:
+#     external: true
