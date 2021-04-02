@@ -4,15 +4,7 @@ import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
-
-const HatsPage = () => (
-  <div>
-    <h1>
-      HATS PAGE
-    </h1>
-  </div>
-)
-
+import ShopPage from './pages/shop/shop.component'
 
 
 function App() {
@@ -21,8 +13,8 @@ function App() {
     <Switch>
       <div>
         {/* renderIfPathIsExactTheSameAsPathParameter relativePathFromHere componentWeWAntTorender */}
-        <Route exact={true} path='/' component={HomePage} /> 
-        <Route exact={false} path='/shop/hats' component={HatsPage} />
+        <Route exact={true}  path='/' component={HomePage} /> 
+        <Route path='/shop' component={ShopPage} />
       </div>
     </Switch>
   );
