@@ -57,7 +57,7 @@ class SingUp extends React.Component{
 
         return(
             <div className='sing-up'>
-                <h2 class='title'>I do not have account</h2>
+                <h2 className='title'>I do not have account</h2>
                 <span>Sign up with your email and password</span>
                 <form className='sing-up-form' onSubmit={this.handleSubmit}>
                     <FormInput
