@@ -1,6 +1,6 @@
-import ACTION_CONSTANTS from '../action-constants'; 
+import {UserActionTypes} from './user.types'; 
 
 export const setCurrentUser = user =>({
-    type: ACTION_CONSTANTS.USER.SET_CURRENT_USER,
+    type: UserActionTypes.SET_CURRENT_USER,
     payload: user 
 })
