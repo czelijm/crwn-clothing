@@ -21,4 +21,5 @@ const mapStateToProps = ({cart:{cartItems}}) =>({
     cartItems
 })
 
+//connect to store where cartReducerStore cartItems
 export default connect(mapStateToProps)(CartDropdown);
