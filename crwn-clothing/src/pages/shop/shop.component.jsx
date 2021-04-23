@@ -1,10 +1,15 @@
 import React from 'react';
+import {Route} from 'react-router-dom';
 
 import CollectionOverview from '../../components/collection-overview/collection-overview.component'
+import CollectionPage from '../collection/collection.component';
 
-const ShopPage = ({collections}) => (
+//we can use match because inside App.js ShopPage is nested in the route and route Passes 3 objects (mach, location. and history ) as props
+const ShopPage = ({match}) => (
     <div className='shop-page'>
-        <CollectionOverview/>
+        <Route exact path={`${match.path}`} component={CollectionOverview} />
+        <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
+        {/* <CollectionOverview/> */}
     </div>
 )
 
