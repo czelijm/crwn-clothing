@@ -14,9 +14,13 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import Header from './components/header/header.component';
 
 import {auth, createUserProfileDocument} from './firebase/firebase.utils';
+// only for collection adding to db, ONE time ONLY 
+// import {auth, createUserProfileDocument, addCollectionsAndDocuments} from './firebase/firebase.utils';
 
 import { setCurrentUser } from './redux/user/user.action';
 import {selectCurrentUser} from './redux/user/user.selectors'
+  // only for collection adding to db, ONE time ONLY 
+// import {selectCollectionForPreview} from './redux/shop/shop.selector';
 
 class App extends React.Component {
   // constructor(){
@@ -30,6 +34,8 @@ class App extends React.Component {
 
   componentDidMount(){
     const {setCurrentUser} = this.props;
+    // only for collection adding to db, ONE time ONLY 
+    // const {setCurrentUser, collectionsArray} = this.props;
 
     this.unsubscribeFromAuth =  auth.onAuthStateChanged(async userAuth =>{
       // this.setState({currentUser:user});
@@ -48,6 +54,9 @@ class App extends React.Component {
       }
       else{
         setCurrentUser(userAuth); 
+        // addCollectionsAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
+        // only for collection adding to db, ONE time ONLY
+        // addCollectionsAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
       }
     });
   }
@@ -77,6 +86,8 @@ class App extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
+  // only for collection adding to db, ONE time ONLY 
+  // ,collectionsArray: selectCollectionForPreview
 })
 
 const mapDispatchToProps = dispatch => ({
