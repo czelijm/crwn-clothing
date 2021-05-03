@@ -17,10 +17,10 @@ export const selectCollection = createSelector(
 
 export const selectCollectionForPreview = createSelector(
     [selectCollection],
-    (collections) => Object.keys(collections).map(key=>collections[key])
+    (collections) => collections ? Object.keys(collections).map(key=>collections[key]) : []
 )
 
 export const selectCollectionCategory = collectionUrlParam => createSelector(
     [selectCollection],
-    collections => collections[collectionUrlParam]//.find(collection => collection.id===COLLECTION_ID_MAP[collectionUrlParam])
+    collections => collections ? collections[collectionUrlParam] : null //.find(collection => collection.id===COLLECTION_ID_MAP[collectionUrlParam])
 )

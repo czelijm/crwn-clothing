@@ -2,16 +2,26 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import {connect} from 'react-redux'
 
-import CollectionOverview from '../../components/collection-overview/collection-overview.component'
-import CollectionPage from '../collection/collection.component';
-
 import {firestore, convertCollectionsSnapshotToMap} from '../../firebase/firebase.utils';
 import { updateCollections } from '../../redux/shop/shop.actions';
+
+import WithSpinner from '../../components/with-spinner/with-spinner.component'
+
+import CollectionOverview from '../../components/collection-overview/collection-overview.component'
+import CollectionPage from '../collection/collection.component';
+// import CollectionPreview from '../../components/collection-preview/collection-preview.component';
+
+const CollectionOverviewWithSpinner = WithSpinner(CollectionOverview);
+const CollectionPageWithSpinner = WithSpinner(CollectionPage);
 
 // import moduleName from '../../redux/shop/shop.selector'
 
 //we can use match because inside App.js ShopPage is nested in the route and route Passes 3 objects (mach, location. and history ) as props
 class ShopPage extends React.Component{
+    state = {
+        loading:true
+    }
+
     unsubcribeFormSnapshot = null;
 
     componentDidMount(){
@@ -25,15 +35,35 @@ class ShopPage extends React.Component{
             const collectionsMap =  convertCollectionsSnapshotToMap(snapshot)
             console.log(collectionsMap);
             updateCollections(collectionsMap);
-        } ); 
+            this.setState({loading:false})
+        } );
+        
+        // //Amother way
+        // collectionRef.get().then(
+        //     snapshot =>{
+        //         // console.log(snapshot);
+        //         const collectionsMap =  convertCollectionsSnapshotToMap(snapshot)
+        //         console.log(collectionsMap);
+        //         updateCollections(collectionsMap);
+        //         this.setState({loading:false})
+        //     }
+        // );
+        
+        // // //yet another way
+        // const url = 'https://firestore.googleapis.com/v1/projects/crwn-db-c4a71/databases/(default)/documents/collection'
+        // fetch(url)
+        // .then(response => response.json())
+        // .then(collections => console.log(collections));
+
     } 
 
     render() {
         const {match} = this.props;
+        const {loading} = this.state;
         return (
             <div className='shop-page'>
-                <Route exact path={`${match.path}`} component={CollectionOverview} />
-                <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
+                <Route exact path={`${match.path}`} render={props=><CollectionOverviewWithSpinner isLoading={loading} {...props} />} />
+                <Route path={`${match.path}/:collectionId`} render={props=> <CollectionPageWithSpinner isLoading={loading} {...props}/>} />
                 {/* <CollectionOverview/> */}
             </div>
         )
