@@ -37,28 +37,28 @@ class App extends React.Component {
     // only for collection adding to db, ONE time ONLY 
     // const {setCurrentUser, collectionsArray} = this.props;
 
-    this.unsubscribeFromAuth =  auth.onAuthStateChanged(async userAuth =>{
-      // this.setState({currentUser:user});
-      //console.log(user);
+    // this.unsubscribeFromAuth =  auth.onAuthStateChanged(async userAuth =>{
+    //   // this.setState({currentUser:user});
+    //   //console.log(user);
 
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    //   if (userAuth) {
+    //     const userRef = await createUserProfileDocument(userAuth);
 
-        //we check that db has been updated
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-              id: snapShot.id,
-              ...snapShot.data()
-          });
-        }) 
-      }
-      else{
-        setCurrentUser(userAuth); 
-        // addCollectionsAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
-        // only for collection adding to db, ONE time ONLY
-        // addCollectionsAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
-      }
-    });
+    //     //we check that db has been updated
+    //     userRef.onSnapshot(snapShot => {
+    //       setCurrentUser({
+    //           id: snapShot.id,
+    //           ...snapShot.data()
+    //       });
+    //     }) 
+    //   }
+    //   else{
+    //     setCurrentUser(userAuth); 
+    //     // addCollectionsAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
+    //     // only for collection adding to db, ONE time ONLY
+    //     // addCollectionsAndDocuments('collections',collectionsArray.map(({title,items})=>({title,items})));
+    //   }
+    // });
   }
 
   componentWillUnmount(){

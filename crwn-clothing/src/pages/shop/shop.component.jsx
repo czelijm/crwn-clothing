@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 // import {createStructuredSelector} from 'reselect'
 
 // import {firestore, convertCollectionsSnapshotToMap} from '../../firebase/firebase.utils';
-import { fetchCollectionsStartAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
 
 
 // import WithSpinner from '../../components/with-spinner/with-spinner.component'
@@ -27,8 +27,8 @@ class ShopPage extends React.Component{
     unsubcribeFormSnapshot = null;
 
     componentDidMount(){
-        const {fetchCollectionsStartAsync} = this.props;
-        fetchCollectionsStartAsync();
+        const {fetchCollectionsStart} = this.props;
+        fetchCollectionsStart();
         // const {updateCollections} = this.props;
         // const collectionRef = firestore.collection('collections'); 
 
@@ -79,7 +79,7 @@ class ShopPage extends React.Component{
 // })
 
 const mapDispatchToProps = dispatch => ({
-    fetchCollectionsStartAsync: () => dispatch(fetchCollectionsStartAsync())
+    fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
 }) 
 
 export default connect(null,mapDispatchToProps)(ShopPage);
