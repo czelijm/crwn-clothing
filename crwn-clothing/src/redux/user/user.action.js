@@ -37,6 +37,21 @@ export const singOutFailure = (error) => ({
     payload:error
 })
 
+export const singUpStart = (emailAndPassword) => ({
+    type: UserActionTypes.SIGN_UP_START,
+    payload:emailAndPassword
+})
+
+export const singUpSuccess = ({user,additionalData}) => ({
+    type: UserActionTypes.SIGN_UP_SUCCESS,
+    payload: {user,additionalData}
+})
+
+export const singUpFailure = (error) => ({
+    type: UserActionTypes.SIGN_UP_FAILURE,
+    payload:error
+})
+
 // export const setCurrentUser = user =>({
 //     type: UserActionTypes.SET_CURRENT_USER,
 //     payload: user 

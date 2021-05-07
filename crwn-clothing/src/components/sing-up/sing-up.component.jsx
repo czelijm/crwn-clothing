@@ -1,12 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux'
 
 import '../form-input/form-input.component';
 import '../custom-button/custom-button.component';
-import {auth, createUserProfileDocument} from '../../firebase/firebase.utils.js';
 
 import './sing-up.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import {singUpStart} from '../../redux/user/user.action'
 
 class SingUp extends React.Component{
     constructor(){
@@ -22,6 +23,7 @@ class SingUp extends React.Component{
     handleSubmit = async (event) =>{ 
         event.preventDefault();
 
+        const {singUpStart} = this.props;
         const {displayName,email,password,confirmPassword} = this.state;
 
         if(password !== confirmPassword){
@@ -29,21 +31,30 @@ class SingUp extends React.Component{
             return;  
         }
 
-        try {
-            const {user} = await auth.createUserWithEmailAndPassword(email,password);
-            await createUserProfileDocument(user,{displayName});
+        singUpStart(email,password,displayName);
 
-            //this will clear our form
-            this.setState({
-                displayName:'',
-                email:'',
-                password:'',
-                confirmPassword:''
-            });
+        // const {displayName,email,password,confirmPassword} = this.state;
 
-        } catch (error) {
-            console.error(error);
-        }
+        // if(password !== confirmPassword){
+        //     alert("passwords don't match");
+        //     return;  
+        // }
+
+        // try {
+        //     const {user} = await auth.createUserWithEmailAndPassword(email,password);
+        //     await createUserProfileDocument(user,{displayName});
+
+        //     //this will clear our form
+        //     this.setState({
+        //         displayName:'',
+        //         email:'',
+        //         password:'',
+        //         confirmPassword:''
+        //     });
+
+        // } catch (error) {
+        //     console.error(error);
+        // }
     }
 
     hanleChange = event =>{
@@ -93,6 +104,7 @@ class SingUp extends React.Component{
                         required
                     />
                     <CustomButton type='submit'>
+                    {/* <CustomButton type='button' onClick={password===confirmPassword?singUpStart:null}> */}
                         SIGN UP
                     </CustomButton>
                 </form>
@@ -101,4 +113,8 @@ class SingUp extends React.Component{
     }  
 }
 
-export default SingUp;
+const mapDispatchToProps = dispatch => ({
+    singUpStart: (email,password,displayName) => dispatch(singUpStart({email,password,displayName}))
+})
+
+export default connect(null,mapDispatchToProps)(SingUp);
