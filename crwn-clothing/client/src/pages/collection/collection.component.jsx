@@ -9,6 +9,15 @@ import CollectionItem from '../../components/collection-item/collection-item.com
 import './collection.styles.scss';
 
 const CollectionPage = ({collection}) => {
+    
+    // //mimic component will unmout
+    // useEffect(()=>{
+        
+    //     //clean-up function
+    //     return ()=>{
+             
+    //     }
+    // })
     const {items,title} = collection;
     return (
         // {console.log(collection)}
