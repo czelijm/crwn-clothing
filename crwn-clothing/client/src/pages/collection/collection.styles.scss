@@ -15,5 +15,17 @@
     & .collection-item {
       margin-bottom: 30px;
     }
+
+    @media screen and (max-width:800px){
+      display: grid;
+      justify-content: center;
+      grid-template-columns: auto;
+      // grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  
+  @media screen and (max-width:800px){
+    // display: unset;
   }
 }

@@ -4,7 +4,7 @@ import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import { connect } from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 
-import './App.css';
+import {GlobalStyle} from './global.styles';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
@@ -49,6 +49,7 @@ const App = ({checkUserSession, currentUser}) => {
   return (
     // render only one Route and go out the swtich
     <div>
+      <GlobalStyle/>
       <Header />
       <Switch>
         {/* renderIfPathIsExactTheSameAsPathParameter relativePathFromHere componentWeWAntTorender */} 
