@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {lazy, Suspense, useEffect} from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import { connect } from 'react-redux';
@@ -6,12 +6,13 @@ import {createStructuredSelector} from 'reselect';
 
 import {GlobalStyle} from './global.styles';
 
-import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
-import SignInUpPage from './pages/sign-in-up/sign-in-up.component';
-import CheckoutPage from './pages/checkout/checkout.component';
+// import HomePage from './pages/homepage/homepage.component';
+// import ShopPage from './pages/shop/shop.component';
+// import SignInUpPage from './pages/sign-in-up/sign-in-up.component';
+// import CheckoutPage from './pages/checkout/checkout.component';
 
 import Header from './components/header/header.component';
+import Spinner from './components/spinner/spinner.component';
 
 // import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 // only for collection adding to db, ONE time ONLY 
@@ -22,6 +23,13 @@ import {selectCurrentUser} from './redux/user/user.selectors'
 import {checkUserSession} from './redux/user/user.action'
   // only for collection adding to db, ONE time ONLY 
 // import {selectCollectionForPreview} from './redux/shop/shop.selector';
+
+//lazy react, chunks, use Supense to not get error while chunk is loading
+const HomePage = lazy(()=>import('./pages/homepage/homepage.component'));
+const ShopPage = lazy(()=>import('./pages/shop/shop.component'));
+const SignInUpPage = lazy(()=>import('./pages/sign-in-up/sign-in-up.component'));
+const CheckoutPage = lazy(()=>import('./pages/checkout/checkout.component'));
+
 
 const App = ({checkUserSession, currentUser}) => {
   // constructor(){
@@ -52,11 +60,13 @@ const App = ({checkUserSession, currentUser}) => {
       <GlobalStyle/>
       <Header />
       <Switch>
-        {/* renderIfPathIsExactTheSameAsPathParameter relativePathFromHere componentWeWAntTorender */} 
-        <Route exact={true}  path='/' component={HomePage} /> 
-        <Route path='/shop' component={ShopPage} />
-        <Route exact path='/checkout' component={CheckoutPage} />
-        <Route exact path='/signin' render={()=>currentUser ? (<Redirect to = '/' />):(<SignInUpPage/>)} />
+        {/* renderIfPathIsExactTheSameAsPathParameter relativePathFromHere componentWeWAntTorender */}
+        <Suspense fallback={<Spinner/>}> 
+          <Route exact={true}  path='/' component={HomePage} /> 
+          <Route path='/shop' component={ShopPage} />
+          <Route exact path='/checkout' component={CheckoutPage} />
+          <Route exact path='/signin' render={()=>currentUser ? (<Redirect to = '/' />):(<SignInUpPage/>)} />
+        </Suspense>
       </Switch>
     </div>
   );
