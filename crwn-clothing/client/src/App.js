@@ -13,6 +13,8 @@ import {GlobalStyle} from './global.styles';
 
 import Header from './components/header/header.component';
 import Spinner from './components/spinner/spinner.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component.jsx';
+
 
 // import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 // only for collection adding to db, ONE time ONLY 
@@ -61,12 +63,14 @@ const App = ({checkUserSession, currentUser}) => {
       <Header />
       <Switch>
         {/* renderIfPathIsExactTheSameAsPathParameter relativePathFromHere componentWeWAntTorender */}
-        <Suspense fallback={<Spinner/>}> 
-          <Route exact={true}  path='/' component={HomePage} /> 
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route exact path='/signin' render={()=>currentUser ? (<Redirect to = '/' />):(<SignInUpPage/>)} />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<Spinner/>}> 
+            <Route exact={true}  path='/' component={HomePage} /> 
+            <Route path='/shop' component={ShopPage} />
+            <Route exact path='/checkout' component={CheckoutPage} />
+            <Route exact path='/signin' render={()=>currentUser ? (<Redirect to = '/' />):(<SignInUpPage/>)} />
+          </Suspense>
+        </ErrorBoundary>
       </Switch>
     </div>
   );
